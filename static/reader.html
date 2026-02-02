@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>阅读模式 - DREAM</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Microsoft Yahei", sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            padding-bottom: 80px;
+            overflow-x: hidden;
+            touch-action: pan-y;
+        }
+        body.night-mode {
+            background-color: #222;
+            color: #e0e0e0;
+        }
+        /* 阅读内容区 */
+        .reader-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 60px auto 0;
+            padding: 20px;
+            line-height: 1.8;
+            font-size: 18px;
+            transition: font-size 0.3s;
+        }
+        .book-title {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .chapter-title {
+            font-size: 22px;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+            font-weight: normal;
+        }
+        .night-mode .chapter-title {
+            color: #66b3ff;
+        }
+        .book-content {
+            margin-bottom: 40px;
+        }
+        .book-content p {
+            margin-bottom: 20px;
+            text-indent: 2em !important;
+        }
+        /* 底部工具栏 */
+        .reader-toolbar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            border-top: 1px solid #eee;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 90;
+            transition: background-color 0.3s, border-color 0.3s, transform 0.3s ease;
+        }
+        .night-mode .reader-toolbar {
+            background-color: #333;
+            border-top-color: #444;
+        }
+        .reader-toolbar.hidden {
+            transform: translateY(100%);
+        }
+        .tool-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .tool-btn {
+            background: none;
+            border: none;
+            color: #333;
+            font-size: 16px;
+            cursor: pointer;
+            transition: color 0.3s;
+            padding: 8px 12px;
+        }
+        .night-mode .tool-btn {
+            color: #e0e0e0;
+        }
+        .tool-btn:hover {
+            color: #007bff;
+        }
+        .chap-btn {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        /* 侧边目录弹窗+遮罩层（左侧弹出） */
+        .catalog-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+        .catalog-sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%; /* 初始在左侧屏幕外 */
+            width: 300px;
+            height: 100vh;
+            background-color: white;
+            z-index: 1000;
+            padding: 20px;
+            padding-top: 60px;
+            overflow-y: auto;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        }
+        .night-mode .catalog-sidebar {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+        .catalog-sidebar.show {
+            left: 0; /* 显示时滑入左侧 */
+        }
+        .catalog-title {
+            font-size: 20px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+        .night-mode .catalog-title {
+            border-bottom-color: #444;
+        }
+        .catalog-list {
+            list-style: none;
+        }
+        .catalog-item {
+            padding: 10px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 4px;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .catalog-item:hover {
+            background-color: #e9ecef;
+        }
+        .night-mode .catalog-item:hover {
+            background-color: #444;
+        }
+        .catalog-item.active {
+            background-color: #007bff;
+            color: white;
+        }
+        .night-mode .catalog-item.active {
+            background-color: #0062cc;
+        }
+        .close-catalog {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            color: #666;
+        }
+        .night-mode .close-catalog {
+            color: #ccc;
+        }
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            font-size: 18px;
+            color: #666;
+            margin-top: 50px;
+        }
+        .night-mode .loading {
+            color: #aaa;
+        }
+        /* 手机端自适应 */
+        @media (max-width: 767px) {
+            .reader-container {
+                font-size: 16px;
+                margin-top: 40px;
+                padding: 10px;
+            }
+            .book-title {
+                font-size: 24px;
+            }
+            .chapter-title {
+                font-size: 20px;
+            }
+            .reader-toolbar {
+                padding: 12px;
+            }
+            .tool-btn, .chap-btn {
+                font-size: 14px;
+                padding: 6px 10px;
+            }
+            .catalog-sidebar {
+                width: 260px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reader-container" id="readerContainer">
+        <h1 class="book-title" id="bookTitle">加载中...</h1>
+        <h2 class="chapter-title" id="chapterTitle">加载章节中...</h2>
+        <div class="book-content" id="bookContent">
+            <div class="loading">正在加载小说内容，请稍等...</div>
+        </div>
+    </div>
+
+    <!-- 底部工具栏：纯文字+精简布局 -->
+    <div class="reader-toolbar hidden" id="readerToolbar">
+        <!-- 最左边：目录按钮（纯文字） -->
+        <button class="tool-btn" id="catalogBtn">目录</button>
+
+        <!-- 中间：仅保留上一章/下一章 -->
+        <div class="tool-group">
+            <button class="chap-btn" id="prevChapter">上一章</button>
+            <button class="chap-btn" id="nextChapter">下一章</button>
+        </div>
+
+        <!-- 最右边：设置按钮（纯文字） -->
+        <button class="tool-btn settings-btn" id="settingsBtn">设置</button>
+    </div>
+
+    <!-- 侧边目录弹窗（左侧弹出） -->
+    <div class="catalog-mask" id="catalogMask"></div>
+    <div class="catalog-sidebar" id="catalogSidebar">
+        <button class="close-catalog" id="closeCatalogBtn">×</button>
+        <h3 class="catalog-title" id="catalogSideTitle">小说目录</h3>
+        <ul class="catalog-list" id="catalogList"></ul>
+    </div>
+
+    <!-- 设置弹窗 -->
+    <div class="catalog-mask" id="settingsMask"></div>
+    <div class="catalog-sidebar" id="settingsSidebar">
+        <button class="close-catalog" id="closeSettingsBtn">×</button>
+        <h3 class="catalog-title">阅读设置</h3>
+        <div class="tool-group" style="flex-direction: column; gap: 20px; padding: 20px 0;">
+            <div class="font-size-group" style="display: flex; align-items: center; gap: 10px;">
+                <button class="tool-btn" id="fontMinus">字号-</button>
+                <span id="fontSizeDisplay">18px</span>
+                <button class="tool-btn" id="fontPlus">字号+</button>
+            </div>
+            <button class="tool-btn" id="nightModeBtn">夜间模式</button>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let currentBookId = '';
+        let currentBook = null;
+        let currentChapterIdx = 0;
+        let currentFontSize = 18;
+        let novelCatalogData = null;
+        let toolbarVisible = false;
+
+        // 获取URL中的小说ID
+        function getBookIdFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('id') || 'hongchenzhishang';
+        }
+
+        // 加载小说目录配置
+        async function loadNovelCatalog() {
+            try {
+                const response = await fetch('/novel_chapters.json');
+                if (!response.ok) throw new Error('章节目录加载失败，请检查JSON文件是否上传');
+                novelCatalogData = await response.json();
+                return true;
+            } catch (error) {
+                document.getElementById('bookContent').innerHTML = `<div class="loading">加载失败：${error.message}</div>`;
+                console.error('JSON配置文件加载失败：', error);
+                return false;
+            }
+        }
+
+        // 渲染侧边目录
+        function renderCatalogSidebar() {
+            const catalogList = document.getElementById('catalogList');
+            const catalogTitle = document.getElementById('catalogSideTitle');
+            catalogTitle.textContent = `${currentBook.title} - 完整目录`;
+            catalogList.innerHTML = '';
+
+            currentBook.chapters.forEach((chapter, index) => {
+                const li = document.createElement('li');
+                li.className = `catalog-item ${index === currentChapterIdx ? 'active' : ''}`;
+                li.dataset.index = index;
+                li.textContent = chapter.name;
+                li.addEventListener('click', () => {
+                    currentChapterIdx = index;
+                    loadChapterContent();
+                    updateCatalogActive();
+                    closeCatalog();
+                });
+                catalogList.appendChild(li);
+            });
+        }
+
+        // 更新目录高亮
+        function updateCatalogActive() {
+            const allItems = document.querySelectorAll('.catalog-item');
+            allItems.forEach((item, index) => {
+                item.classList.toggle('active', index === currentChapterIdx);
+                if(index === currentChapterIdx){
+                    item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            });
+        }
+
+        // 目录弹窗控制
+        function openCatalog() {
+            document.getElementById('catalogMask').style.display = 'block';
+            document.getElementById('catalogSidebar').classList.add('show');
+        }
+        function closeCatalog() {
+            document.getElementById('catalogMask').style.display = 'none';
+            document.getElementById('catalogSidebar').classList.remove('show');
+        }
+
+        // 设置弹窗控制
+        function openSettings() {
+            document.getElementById('settingsMask').style.display = 'block';
+            document.getElementById('settingsSidebar').classList.add('show');
+        }
+        function closeSettings() {
+            document.getElementById('settingsMask').style.display = 'none';
+            document.getElementById('settingsSidebar').classList.remove('show');
+        }
+
+        // 加载章节内容
+        async function loadChapterContent() {
+            const bookContent = document.getElementById('bookContent');
+            const chapterTitle = document.getElementById('chapterTitle');
+            bookContent.innerHTML = '<div class="loading">正在加载章节内容，请稍等...</div>';
+
+            const chapterInfo = currentBook.chapters[currentChapterIdx];
+            chapterTitle.textContent = chapterInfo.name;
+            const chapterPath = `${currentBook.basePath}${chapterInfo.file}`;
+
+            try {
+                const response = await fetch(chapterPath);
+                if (!response.ok) throw new Error('章节内容加载失败，请检查章节文件是否上传');
+
+                const chapterText = await response.text();
+                let htmlContent = chapterText
+                    .split('\n')
+                    .filter(line => line.trim() !== '')
+                    .map(line => `<p>${line}</p>`)
+                    .join('');
+
+                bookContent.innerHTML = htmlContent;
+                window.scrollTo(0, 0);
+            } catch (error) {
+                bookContent.innerHTML = `<div class="loading">加载失败：${error.message}</div>`;
+                console.error('章节加载失败：', error);
+            }
+        }
+
+        // 绑定章节导航事件
+        function bindChapterNavEvent() {
+            document.getElementById('prevChapter').addEventListener('click', () => {
+                if (currentChapterIdx > 0) {
+                    currentChapterIdx--;
+                    loadChapterContent();
+                    updateCatalogActive();
+                }
+            });
+            document.getElementById('nextChapter').addEventListener('click', () => {
+                if (currentChapterIdx < currentBook.chapters.length - 1) {
+                    currentChapterIdx++;
+                    loadChapterContent();
+                    updateCatalogActive();
+                }
+            });
+        }
+
+        // 绑定控制栏显示/隐藏
+        function bindToolbarToggle() {
+            const readerContainer = document.getElementById('readerContainer');
+            const toolbar = document.getElementById('readerToolbar');
+
+            // 点击内容区切换工具栏显示状态
+            readerContainer.addEventListener('click', () => {
+                toolbarVisible = !toolbarVisible;
+                toolbar.classList.toggle('hidden', !toolbarVisible);
+            });
+        }
+
+        // 初始化阅读器
+        async function initReader() {
+            currentBookId = getBookIdFromUrl();
+            const isCatalogLoaded = await loadNovelCatalog();
+            if (!isCatalogLoaded) return;
+
+            currentBook = novelCatalogData[currentBookId] || novelCatalogData.hongchenzhishang;
+            document.getElementById('bookTitle').textContent = currentBook.title;
+
+            renderCatalogSidebar();
+            bindChapterNavEvent();
+            bindToolbarToggle();
+
+            // 绑定目录按钮事件
+            document.getElementById('catalogBtn').addEventListener('click', openCatalog);
+            document.getElementById('closeCatalogBtn').addEventListener('click', closeCatalog);
+            document.getElementById('catalogMask').addEventListener('click', closeCatalog);
+
+            // 绑定设置按钮事件
+            document.getElementById('settingsBtn').addEventListener('click', openSettings);
+            document.getElementById('closeSettingsBtn').addEventListener('click', closeSettings);
+            document.getElementById('settingsMask').addEventListener('click', closeSettings);
+
+            // 按ESC键关闭弹窗
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'Escape') {
+                    closeCatalog();
+                    closeSettings();
+                }
+            });
+
+            await loadChapterContent();
+        }
+
+        // 字号调整
+        const fontMinus = document.getElementById('fontMinus');
+        const fontPlus = document.getElementById('fontPlus');
+        const fontSizeDisplay = document.getElementById('fontSizeDisplay');
+        const readerContainer = document.getElementById('readerContainer');
+        fontMinus.addEventListener('click', () => {
+            if (currentFontSize > 14) {
+                currentFontSize -= 2;
+                readerContainer.style.fontSize = `${currentFontSize}px`;
+                fontSizeDisplay.textContent = `${currentFontSize}px`;
+            }
+        });
+        fontPlus.addEventListener('click', () => {
+            if (currentFontSize < 24) {
+                currentFontSize += 2;
+                readerContainer.style.fontSize = `${currentFontSize}px`;
+                fontSizeDisplay.textContent = `${currentFontSize}px`;
+            }
+        });
+
+        // 夜间模式切换
+        const nightModeBtn = document.getElementById('nightModeBtn');
+        nightModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('night-mode');
+            nightModeBtn.textContent = document.body.classList.contains('night-mode') ? '日间模式' : '夜间模式';
+        });
+
+        // 页面加载完成后初始化
+        window.onload = initReader;
+    </script>
+</body>
+</html>
