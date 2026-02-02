@@ -1,0 +1,648 @@
+{
+    "hongchenzhishang": {
+        "title": "《红尘之殇》",
+        "basePath": "/novel_texts/hongchenzhishang/",
+        "chapters": [
+            {
+                "id": 1,
+                "name": "楔子",
+                "file": "chapter1.txt"
+            },
+            {
+                "id": 2,
+                "name": "第一章",
+                "file": "chapter2.txt"
+            },
+            {
+                "id": 3,
+                "name": "第二章",
+                "file": "chapter3.txt"
+            },
+            {
+                "id": 4,
+                "name": "第三章",
+                "file": "chapter4.txt"
+            },
+            {
+                "id": 5,
+                "name": "第四章",
+                "file": "chapter5.txt"
+            },
+            {
+                "id": 6,
+                "name": "第五章",
+                "file": "chapter6.txt"
+            },
+            {
+                "id": 7,
+                "name": "第六章",
+                "file": "chapter7.txt"
+            },
+            {
+                "id": 8,
+                "name": "第七章",
+                "file": "chapter8.txt"
+            },
+            {
+                "id": 9,
+                "name": "第八章",
+                "file": "chapter9.txt"
+            },
+            {
+                "id": 10,
+                "name": "第九章",
+                "file": "chapter10.txt"
+            },
+            {
+                "id": 11,
+                "name": "第十章",
+                "file": "chapter11.txt"
+            },
+            {
+                "id": 12,
+                "name": "第十一章",
+                "file": "chapter12.txt"
+            },
+            {
+                "id": 13,
+                "name": "第十二章",
+                "file": "chapter13.txt"
+            },
+            {
+                "id": 14,
+                "name": "第十三章",
+                "file": "chapter14.txt"
+            },
+            {
+                "id": 15,
+                "name": "第十四章",
+                "file": "chapter15.txt"
+            },
+            {
+                "id": 16,
+                "name": "第十五章",
+                "file": "chapter16.txt"
+            },
+            {
+                "id": 17,
+                "name": "第十六章",
+                "file": "chapter17.txt"
+            },
+            {
+                "id": 18,
+                "name": "第十七章",
+                "file": "chapter18.txt"
+            },
+            {
+                "id": 19,
+                "name": "第十八章",
+                "file": "chapter19.txt"
+            },
+            {
+                "id": 20,
+                "name": "第十九章",
+                "file": "chapter20.txt"
+            },
+            {
+                "id": 21,
+                "name": "第二十章",
+                "file": "chapter21.txt"
+            },
+            {
+                "id": 22,
+                "name": "第二十一章",
+                "file": "chapter22.txt"
+            },
+            {
+                "id": 23,
+                "name": "第二十二章",
+                "file": "chapter23.txt"
+            },
+            {
+                "id": 24,
+                "name": "第二十三章",
+                "file": "chapter24.txt"
+            },
+            {
+                "id": 25,
+                "name": "第二十四章",
+                "file": "chapter25.txt"
+            },
+            {
+                "id": 26,
+                "name": "第二十五章",
+                "file": "chapter26.txt"
+            },
+            {
+                "id": 27,
+                "name": "第二十六章",
+                "file": "chapter27.txt"
+            },
+            {
+                "id": 28,
+                "name": "第二十七章",
+                "file": "chapter28.txt"
+            },
+            {
+                "id": 29,
+                "name": "第二十八章",
+                "file": "chapter29.txt"
+            },
+            {
+                "id": 30,
+                "name": "第二十九章",
+                "file": "chapter30.txt"
+            },
+            {
+                "id": 31,
+                "name": "第三十章",
+                "file": "chapter31.txt"
+            },
+            {
+                "id": 32,
+                "name": "第三十一章",
+                "file": "chapter32.txt"
+            },
+            {
+                "id": 33,
+                "name": "第三十二章",
+                "file": "chapter33.txt"
+            },
+            {
+                "id": 34,
+                "name": "第三十三章",
+                "file": "chapter34.txt"
+            },
+            {
+                "id": 35,
+                "name": "第三十四章",
+                "file": "chapter35.txt"
+            },
+            {
+                "id": 36,
+                "name": "第三十五章",
+                "file": "chapter36.txt"
+            },
+            {
+                "id": 37,
+                "name": "第三十六章",
+                "file": "chapter37.txt"
+            },
+            {
+                "id": 38,
+                "name": "第三十七章",
+                "file": "chapter38.txt"
+            },
+            {
+                "id": 39,
+                "name": "第三十八章",
+                "file": "chapter39.txt"
+            },
+            {
+                "id": 40,
+                "name": "第三十九章",
+                "file": "chapter40.txt"
+            },
+            {
+                "id": 41,
+                "name": "第四十章",
+                "file": "chapter41.txt"
+            },
+            {
+                "id": 42,
+                "name": "第四十一章",
+                "file": "chapter42.txt"
+            },
+            {
+                "id": 43,
+                "name": "第四十二章",
+                "file": "chapter43.txt"
+            },
+            {
+                "id": 44,
+                "name": "第四十三章",
+                "file": "chapter44.txt"
+            },
+            {
+                "id": 45,
+                "name": "第四十四章",
+                "file": "chapter45.txt"
+            },
+            {
+                "id": 46,
+                "name": "第四十五章",
+                "file": "chapter46.txt"
+            },
+            {
+                "id": 47,
+                "name": "第四十六章",
+                "file": "chapter47.txt"
+            },
+            {
+                "id": 48,
+                "name": "第四十七章",
+                "file": "chapter48.txt"
+            },
+            {
+                "id": 49,
+                "name": "第四十八章",
+                "file": "chapter49.txt"
+            },
+            {
+                "id": 50,
+                "name": "第四十九章",
+                "file": "chapter50.txt"
+            },
+            {
+                "id": 51,
+                "name": "第五十章",
+                "file": "chapter51.txt"
+            },
+            {
+                "id": 52,
+                "name": "第五十一章",
+                "file": "chapter52.txt"
+            },
+            {
+                "id": 53,
+                "name": "第五十二章",
+                "file": "chapter53.txt"
+            },
+            {
+                "id": 54,
+                "name": "第五十三章",
+                "file": "chapter54.txt"
+            },
+            {
+                "id": 55,
+                "name": "第五十四章",
+                "file": "chapter55.txt"
+            },
+            {
+                "id": 56,
+                "name": "第五十五章",
+                "file": "chapter56.txt"
+            },
+            {
+                "id": 57,
+                "name": "第五十六章",
+                "file": "chapter57.txt"
+            },
+            {
+                "id": 58,
+                "name": "第五十七章",
+                "file": "chapter58.txt"
+            },
+            {
+                "id": 59,
+                "name": "第五十八章",
+                "file": "chapter59.txt"
+            },
+            {
+                "id": 60,
+                "name": "第五十九章",
+                "file": "chapter60.txt"
+            },
+            {
+                "id": 61,
+                "name": "第六十章",
+                "file": "chapter61.txt"
+            },
+            {
+                "id": 62,
+                "name": "第六十一章",
+                "file": "chapter62.txt"
+            },
+            {
+                "id": 63,
+                "name": "第六十二章",
+                "file": "chapter63.txt"
+            },
+            {
+                "id": 64,
+                "name": "第六十三章",
+                "file": "chapter64.txt"
+            },
+            {
+                "id": 65,
+                "name": "第六十四章",
+                "file": "chapter65.txt"
+            },
+            {
+                "id": 66,
+                "name": "第六十五章",
+                "file": "chapter66.txt"
+            },
+            {
+                "id": 67,
+                "name": "第六十六章",
+                "file": "chapter67.txt"
+            },
+            {
+                "id": 68,
+                "name": "第六十七章",
+                "file": "chapter68.txt"
+            },
+            {
+                "id": 69,
+                "name": "第六十八章",
+                "file": "chapter69.txt"
+            },
+            {
+                "id": 70,
+                "name": "第六十九章",
+                "file": "chapter70.txt"
+            },
+            {
+                "id": 71,
+                "name": "第七十章",
+                "file": "chapter71.txt"
+            },
+            {
+                "id": 72,
+                "name": "第七十一章",
+                "file": "chapter72.txt"
+            },
+            {
+                "id": 73,
+                "name": "第七十二章",
+                "file": "chapter73.txt"
+            },
+            {
+                "id": 74,
+                "name": "第七十三章",
+                "file": "chapter74.txt"
+            },
+            {
+                "id": 75,
+                "name": "第七十四章",
+                "file": "chapter75.txt"
+            },
+            {
+                "id": 76,
+                "name": "第七十五章",
+                "file": "chapter76.txt"
+            },
+            {
+                "id": 77,
+                "name": "第76章",
+                "file": "chapter77.txt"
+            },
+            {
+                "id": 78,
+                "name": "第七十七章",
+                "file": "chapter78.txt"
+            },
+            {
+                "id": 79,
+                "name": "第七十八章",
+                "file": "chapter79.txt"
+            },
+            {
+                "id": 80,
+                "name": "第七十九章",
+                "file": "chapter80.txt"
+            },
+            {
+                "id": 81,
+                "name": "第八十章",
+                "file": "chapter81.txt"
+            },
+            {
+                "id": 82,
+                "name": "第八十一章",
+                "file": "chapter82.txt"
+            },
+            {
+                "id": 83,
+                "name": "第八十二章",
+                "file": "chapter83.txt"
+            },
+            {
+                "id": 84,
+                "name": "第八十三章",
+                "file": "chapter84.txt"
+            },
+            {
+                "id": 85,
+                "name": "第八十四章",
+                "file": "chapter85.txt"
+            },
+            {
+                "id": 86,
+                "name": "第八十五章",
+                "file": "chapter86.txt"
+            },
+            {
+                "id": 87,
+                "name": "第八十六章",
+                "file": "chapter87.txt"
+            },
+            {
+                "id": 88,
+                "name": "第八十七章",
+                "file": "chapter88.txt"
+            },
+            {
+                "id": 89,
+                "name": "第八十八章",
+                "file": "chapter89.txt"
+            },
+            {
+                "id": 90,
+                "name": "第八十九章",
+                "file": "chapter90.txt"
+            },
+            {
+                "id": 91,
+                "name": "第九十章",
+                "file": "chapter91.txt"
+            },
+            {
+                "id": 92,
+                "name": "第九十一章",
+                "file": "chapter92.txt"
+            },
+            {
+                "id": 93,
+                "name": "第九十二章",
+                "file": "chapter93.txt"
+            },
+            {
+                "id": 94,
+                "name": "第九十三章",
+                "file": "chapter94.txt"
+            },
+            {
+                "id": 95,
+                "name": "第九十四章",
+                "file": "chapter95.txt"
+            },
+            {
+                "id": 96,
+                "name": "第九十五章",
+                "file": "chapter96.txt"
+            },
+            {
+                "id": 97,
+                "name": "第九十六章",
+                "file": "chapter97.txt"
+            },
+            {
+                "id": 98,
+                "name": "第九十七章",
+                "file": "chapter98.txt"
+            },
+            {
+                "id": 99,
+                "name": "第九十八章",
+                "file": "chapter99.txt"
+            },
+            {
+                "id": 100,
+                "name": "第九十九章",
+                "file": "chapter100.txt"
+            },
+            {
+                "id": 101,
+                "name": "第一百章",
+                "file": "chapter101.txt"
+            },
+            {
+                "id": 102,
+                "name": "第一百一十章",
+                "file": "chapter102.txt"
+            },
+            {
+                "id": 103,
+                "name": "第一百一十一章",
+                "file": "chapter103.txt"
+            },
+            {
+                "id": 104,
+                "name": "第一百一十二章",
+                "file": "chapter104.txt"
+            },
+            {
+                "id": 105,
+                "name": "第一百一十三章",
+                "file": "chapter105.txt"
+            },
+            {
+                "id": 106,
+                "name": "第一百一十四章",
+                "file": "chapter106.txt"
+            },
+            {
+                "id": 107,
+                "name": "第一百一十五章",
+                "file": "chapter107.txt"
+            },
+            {
+                "id": 108,
+                "name": "第一百一十六章",
+                "file": "chapter108.txt"
+            },
+            {
+                "id": 109,
+                "name": "第一百一十七章",
+                "file": "chapter109.txt"
+            },
+            {
+                "id": 110,
+                "name": "第一百一十八章",
+                "file": "chapter110.txt"
+            },
+            {
+                "id": 111,
+                "name": "第一百一十九章",
+                "file": "chapter111.txt"
+            },
+            {
+                "id": 112,
+                "name": "第一百二十章",
+                "file": "chapter112.txt"
+            },
+            {
+                "id": 113,
+                "name": "第一章",
+                "file": "chapter113.txt"
+            },
+            {
+                "id": 114,
+                "name": "第二章",
+                "file": "chapter114.txt"
+            },
+            {
+                "id": 115,
+                "name": "第三章",
+                "file": "chapter115.txt"
+            },
+            {
+                "id": 116,
+                "name": "第四章",
+                "file": "chapter116.txt"
+            },
+            {
+                "id": 117,
+                "name": "第五章",
+                "file": "chapter117.txt"
+            },
+            {
+                "id": 118,
+                "name": "第六章",
+                "file": "chapter118.txt"
+            },
+            {
+                "id": 119,
+                "name": "第121章",
+                "file": "chapter119.txt"
+            },
+            {
+                "id": 120,
+                "name": "第122章",
+                "file": "chapter120.txt"
+            },
+            {
+                "id": 121,
+                "name": "第123章",
+                "file": "chapter121.txt"
+            },
+            {
+                "id": 122,
+                "name": "第124章",
+                "file": "chapter122.txt"
+            },
+            {
+                "id": 123,
+                "name": "第125章",
+                "file": "chapter123.txt"
+            },
+            {
+                "id": 124,
+                "name": "第一百二十六章",
+                "file": "chapter124.txt"
+            },
+            {
+                "id": 125,
+                "name": "第一百二十七章",
+                "file": "chapter125.txt"
+            },
+            {
+                "id": 126,
+                "name": "第一百二十八章",
+                "file": "chapter126.txt"
+            },
+            {
+                "id": 127,
+                "name": "第一百二十九章",
+                "file": "chapter127.txt"
+            },
+            {
+                "id": 128,
+                "name": "第一百三十章",
+                "file": "chapter128.txt"
+            }
+        ]
+    }
+}

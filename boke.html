@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DREAM</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* 给侧边栏留出空间，避免内容被遮挡 */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* 锚点跳转平滑滚动 */
+            scroll-behavior: smooth;
+        }
+
+        /* 顶部导航栏 */
+        nav.header-nav {
+            background-color: #333;
+            padding: 15px 0;
+            /* 手机端显示汉堡菜单按钮 */
+            position: relative;
+            z-index: 100;
+        }
+        nav.header-nav .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        nav.header-nav .logo {
+            color: white;
+            font-size: 24px;
+        }
+        /* 手机端汉堡菜单按钮（默认隐藏，小屏幕显示） */
+        .sidebar-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* 核心：侧边栏样式 */
+        .sidebar {
+            width: 200px;
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            /* 固定侧边栏，跟随滚动 */
+            position: fixed;
+            top: 70px; /* 对应顶部导航栏高度 */
+            left: 0;
+            bottom: 0;
+            overflow-y: auto; /* 选项多的时候可滚动 */
+            border-right: 1px solid #eee;
+            z-index: 90;
+        }
+        /* 侧边栏导航列表 */
+        .sidebar-menu {
+            list-style: none;
+            padding: 0 15px;
+        }
+        .sidebar-menu li {
+            margin-bottom: 10px;
+        }
+        .sidebar-menu a {
+            display: block;
+            padding: 10px 15px;
+            color: #333;
+            text-decoration: none;
+            font-size: 16px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        /* 鼠标悬浮/选中效果 */
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        /* 主内容区：避开侧边栏 */
+        .main-content {
+            margin-left: 200px; /* 对应侧边栏宽度 */
+            flex: 1;
+            padding: 30px 0;
+        }
+        .container {
+            width: 90%;
+            max-width: 1000px; /* 主内容区最大宽度 */
+            margin: 0 auto;
+        }
+        /* 内容分类板块（新增：用于锚点定位） */
+        .content-section {
+            margin-bottom: 40px;
+        }
+        .content-section h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        /* 内容卡片样式 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .card h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 媒体查询：手机端适配（宽度<768px） */
+        @media (max-width: 767px) {
+            /* 显示汉堡菜单按钮 */
+            .sidebar-toggle {
+                display: block;
+            }
+            /* 手机端侧边栏默认隐藏，点击汉堡菜单显示 */
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                top: 0;
+                width: 80%;
+                max-width: 250px;
+                box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+            }
+            /* 侧边栏激活（显示）状态 */
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            /* 手机端主内容区取消左边距 */
+            .main-content {
+                margin-left: 0;
+                padding: 20px 0;
+            }
+            /* 手机端卡片文字缩小 */
+            .content-section h2 {
+                font-size: 24px;
+            }
+            .card h3 {
+                font-size: 18px;
+            }
+            .card p {
+                font-size: 14px;
+            }
+            /* 顶部导航栏文字缩小 */
+            nav.header-nav .logo {
+                font-size: 20px;
+            }
+        }
+    </style>
+
+    <?php
+    // ============ 这里只需要修改 4行配置！改成你的信息 ============
+    $db_host = 'localhost';    // 数据库地址，固定写localhost，不用改
+    $db_user = 'root';         // 数据库用户名，固定root，不用改
+    $db_pwd = 'Wwb!18395919245';     // 你的MySQL密码，就是你刚设置的这个！
+    $db_name = 'web_visit';    // 数据库名，固定web_visit，不用改
+    // ============ 配置结束，下面的代码一行都不要改 ============
+
+    // 1. 自动采集所有访问信息（不用手动操作，PHP自动获取）
+    $visitor_ip = $_SERVER['REMOTE_ADDR'];        // 访问者IP地址
+    $visit_time = date('Y-m-d H:i:s');            // 精确访问时间（年月日 时分秒）
+    $visit_page = $_SERVER['REQUEST_URI'];        // 访客打开的页面地址
+    $device_info = $_SERVER['HTTP_USER_AGENT'];   // 设备+浏览器+系统（例：电脑/Chrome/Windows10）
+    $visit_source = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '直接输入网址访问'; // 来源
+
+    // 2. 连接数据库
+    $conn = mysqli_connect($db_host, $db_user, $db_pwd, $db_name);
+    mysqli_set_charset($conn, 'utf8mb4');
+
+    // 3. 把采集到的信息写入数据库表
+    $sql = "INSERT INTO visit_log (ip, visit_time, page_url, device_info, visit_source)
+    VALUES ('{$visitor_ip}', '{$visit_time}', '{$visit_page}', '{$device_info}', '{$visit_source}')";
+    mysqli_query($conn, $sql);
+
+    // 4. 关闭数据库连接
+    mysqli_close($conn);
+    ?>
+</head>
+<body>
+    <!-- 顶部导航栏（含汉堡菜单按钮） -->
+    <nav class="header-nav">
+        <div class="container">
+            <div class="logo">我的网站</div>
+            <!-- 手机端汉堡菜单按钮 -->
+            <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- 左侧侧边栏（链接改为锚点） -->
+    <aside class="sidebar" id="sidebar">
+        <ul class="sidebar-menu">
+            <li><a href="computer.html" class="active">计算机</a></li>
+            <li><a href="english.html">英语</a></li>
+            <li><a href="music.html">音乐</a></li>
+            <li><a href="movie.html">电影</a></li>
+            <li><a href="novel.html">小说</a></li>
+        </ul>
+    </aside>
+
+    <!-- 主内容区（按分类拆分板块，添加锚点ID） -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 计算机分类板块 -->
+            <section class="content-section" id="computer">
+                <h2>计算机</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400" alt="示例图片">
+                        <h3>计算机相关内容</h3>
+                        <p>这里可以放计算机领域的文章、教程或资源，侧边栏点击“计算机”可定位到对应内容。</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?6" alt="示例图片">
+                        <h3>编程入门教程</h3>
+                        <p>包含Python、Java、JavaScript等编程语言的入门教程，适合新手学习。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 英语分类板块 -->
+            <section class="content-section" id="english">
+                <h2>英语</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?2" alt="示例图片">
+                        <h3>英语学习资源</h3>
+                        <p>包含英语语法、词汇、口语等学习内容，侧边栏可快速切换到该分类。</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?7" alt="示例图片">
+                        <h3>四六级备考</h3>
+                        <p>四六级考试真题、解题技巧、作文模板，助力考试通关。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 音乐分类板块 -->
+            <section class="content-section" id="music">
+                <h2>音乐</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?3" alt="示例图片">
+                        <h3>音乐推荐</h3>
+                        <p>分享不同风格的音乐，点击侧边栏“音乐”可查看更多推荐内容。</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?8" alt="示例图片">
+                        <h3>乐器教学</h3>
+                        <p>吉他、钢琴、尤克里里等乐器的入门教学，零基础也能学。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 电影分类板块 -->
+            <section class="content-section" id="movie">
+                <h2>电影</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?4" alt="示例图片">
+                        <h3>电影影评</h3>
+                        <p>最新电影点评、经典影片推荐，侧边栏“电影”分类可浏览全部内容。</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?9" alt="示例图片">
+                        <h3>高分电影合集</h3>
+                        <p>豆瓣Top250电影推荐，涵盖剧情、科幻、悬疑等多种类型。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 小说分类板块 -->
+            <section class="content-section" id="novel">
+                <h2>小说</h2>
+                <div class="content-grid">
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?5" alt="示例图片">
+                        <h3>小说连载</h3>
+                        <p>各类小说资源和读后感，侧边栏“小说”入口可直达对应板块。</p>
+                    </div>
+                    <div class="card">
+                        <img src="https://picsum.photos/600/400?10" alt="示例图片">
+                        <h3>经典名著解读</h3>
+                        <p>《红楼梦》《西游记》等经典名著的深度解读，帮助理解作品内涵。</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- JS交互：汉堡菜单 + 锚点激活态 -->
+    <script>
+        // 获取元素
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        // 1. 点击汉堡菜单切换侧边栏显示/隐藏
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+        });
+
+        // 2. 手机端点击侧边栏链接后自动收起侧边栏
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('active');
+                }
+            });
+        });
+
+        // 3. 滚动页面时，自动更新侧边栏激活态（可选：提升体验）
+        window.addEventListener('scroll', function() {
+            let current = '';
+            contentSections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            sidebarLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
